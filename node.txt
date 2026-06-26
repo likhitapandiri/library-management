@@ -12,3 +12,9 @@ not npm
 npx executes the prisma inside nodemodules / .bin 
 
 npm knows what to install , run , start
+
+
+schema.prisma 
+initially has client, db - default postgresql
+
+can change it to relevant db 
