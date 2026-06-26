@@ -1,0 +1,6 @@
+1. npm i prisma --save-dev 
+this is the CLI tool 
+using for commands like npm prisma generate,migrate,etc
+
+2. npm i @prisma/client
+this is what our applican uses 
