@@ -1,6 +1,14 @@
 1. npm i prisma --save-dev 
 this is the CLI tool 
 using for commands like npm prisma generate,migrate,etc
+creates inside node-modules .bin/prisma 
 
 2. npm i @prisma/client
 this is what our applican uses 
+
+initialize prisma :
+npx prisma init - creates schema.prisma file and env file 
+not npm 
+npx executes the prisma inside nodemodules / .bin 
+
+npm knows what to install , run , start
