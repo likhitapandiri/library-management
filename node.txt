@@ -18,3 +18,16 @@ schema.prisma
 initially has client, db - default postgresql
 
 can change it to relevant db 
+
+
+db connection 
+now tell prisma - ur db details from DATABASE_URL in env 
+protocol ,db username,db password , host , port , db name
+
+so when prisma starts 
+reads db_url 
+creates connection pool 
+authenticate
+ready 
+
+
