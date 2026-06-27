@@ -49,3 +49,32 @@ andwith generate command it gets class code from schema.prisma
 and stores as prismaclient 
 
 and now npm start
+
+
+many beginners think schema.prisma is part of runtime like node-> schema ->DB 
+but no, schema is used only during npx prisma migrate, npx prisma generate 
+and gets JS code - prisma client is JS library provides APIS like .findMany() etc 
+
+  student      Student   @relation(fields: [studentId], references: [id])
+  book         Book      @relation(fields: [bookId], references: [id])
+here these are database fields same like sql refenrcing the foreign keys 
+
+but in prisma we also add 
+borrowRecords BorrowRecord[]
+bcoz prisma want to handle relations from both the sides
+without these 
+prisma knows 
+BorrowRecord
+     ↓
+Student
+but prisma doesnt know 
+Student
+     ↓
+BorrowRecords ?
+means one to many realtionship 
+does not create another column in the Student table.
+When someone asks for Student.borrowRecords,
+use BorrowRecord.studentId to find them.
+
+run npx prisma migrate - which internally runs prisma generate also 
+an now ur db updates with the tables 
