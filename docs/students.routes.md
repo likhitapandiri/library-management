@@ -24,10 +24,22 @@ curl http://localhost:3000/students
 curl http://localhost:3000/students/1
 ```
 
+## Get Student By ID reverse navigation
+
+```bash
+curl http://localhost:3000/students/reverse/1
+```
+
+## Get Student By ID reverse navigation with nested include 
+
+```bash
+curl http://localhost:3000/students/reverse/nested/1
+```
+
 ## Update Student
 
 ```bash
-curl -X PATCH http://localhost:3000/students/1 \
+curl -X POST http://localhost:3000/students/1 \
 -H "Content-Type: application/json" \
 -d '{
   "phone": "9999999999"
@@ -51,3 +63,8 @@ curl -X DELETE http://localhost:3000/students/1
   "createdAt": "2026-08-08T10:00:00.000Z"
 }
 ```
+
+
+router.get("/reverse/:id",getStudentByIdReverse);
+
+router.get("/reverse/nested/:id",getStudentByIdNestedReverse);

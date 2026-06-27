@@ -20,7 +20,7 @@ curl http://localhost:3000/books/1
 
 ## Update Book
 
-curl -X PATCH http://localhost:3000/books/1 \
+curl -X POST http://localhost:3000/books/1 \
 -H "Content-Type: application/json" \
 -d '{
   "quantity": 20
