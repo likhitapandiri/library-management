@@ -31,3 +31,21 @@ authenticate
 ready 
 
 
+start prismaclient 
+
+const prisma = new PrismaClient();
+creates an obj of prisma client - this doesnt mean it reates a connection pool
+with this it often connects with db when actual db uqery is called
+
+to explicitly set 
+await prisma.$connect();
+now prisma is forced to connect with DB 
+
+
+and u need to run npx prisma generate 
+so u can import the PrismaClient class 
+without the command node doenst get the prisma class 
+andwith generate command it gets class code from schema.prisma 
+and stores as prismaclient 
+
+and now npm start
