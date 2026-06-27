@@ -76,5 +76,53 @@ does not create another column in the Student table.
 When someone asks for Student.borrowRecords,
 use BorrowRecord.studentId to find them.
 
-run npx prisma migrate - which internally runs prisma generate also 
-an now ur db updates with the tables 
+run npx prisma migrate -
+which internally runs prisma generate also an now ur db updates with the tables 
+Your Express app is not involved.
+Your Node server may even be stopped.
+Terminal
+   ↓
+Prisma CLI
+   ↓
+Migration Engine
+   ↓
+MySQL
+node index.js and npx prisma migrate dev are two completely different processes.
+Prisma CLI:
+Reads schema.prisma
+Compares it with previous migrations
+Generates SQL
+Opens a database connection
+Executes SQL
+Then How Does Generate Work?
+
+at it also runs npx prisma generate
+No database is required.No connection pool is required.No MySQL query is required.
+
+It simply:
+Read schema.prisma
+       ↓
+Parse models
+       ↓
+Generate JavaScript/TypeScript code
+       ↓
+Write files to disk
+
+Example:
+model Book {
+  id Int @id
+}
+
+becomes generated code similar to:
+
+class PrismaClient {
+
+  book = {
+    findMany(){},
+    create(){},
+    update(){}
+  }
+
+}
+
+and saves it into:node_modules/@prisma/client(or the custom output folder).
