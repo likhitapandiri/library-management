@@ -2,6 +2,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import booksRoutes from "./src/routes/books.routes.js";
+import studentsRoutes from "./src/routes/students.routes.js";
 import prisma from "./src/prismaClient.js";
 
 const app = express();
@@ -16,6 +17,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/books",booksRoutes);
+
+app.use("/students",studentsRoutes);
 
 // Start server
 app.listen(PORT, () => {
