@@ -1,5 +1,12 @@
 import express from "express";
 import prisma from "../prismaClient.js";
+import validateRequest from "../../middleware/validator.js";
+
+import {
+  CreateStudentSchema,
+  UpdateStudentSchema,
+  StudentIdSchema,
+} from "../validators/student.validator.js";
 
 const router = express.Router();
 
@@ -152,18 +159,35 @@ const deleteStudent = async(req,res) =>{
     }
 }
 
+router.post("/", validateRequest(CreateStudentSchema), createStudent);
+
 router.get("/", getStudents);
 
-router.post("/", createStudent);
+router.get("/:id", validateRequest(StudentIdSchema, "params"), getStudentById);
 
-router.get("/:id", getStudentById);
+router.get(
+  "/reverse/:id",
+  validateRequest(StudentIdSchema, "params"),
+  getStudentByIdReverse,
+);
 
-router.get("/reverse/:id",getStudentByIdReverse);
+router.get(
+  "/reverse/nested/:id",
+  validateRequest(StudentIdSchema, "params"),
+  getStudentByIdNestedReverse,
+);
 
-router.get("/reverse/nested/:id",getStudentByIdNestedReverse);
+router.post(
+  "/:id",
+  validateRequest(StudentIdSchema, "params"),
+  validateRequest(UpdateStudentSchema),
+  updateStudent,
+);
 
-router.post("/:id", updateStudent);
-
-router.delete("/:id", deleteStudent);
+router.delete(
+  "/:id",
+  validateRequest(StudentIdSchema, "params"),
+  deleteStudent,
+);
 
 export default router; 

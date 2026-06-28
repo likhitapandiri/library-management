@@ -4,10 +4,16 @@ const validateRequest = (schema,source = "body") =>{
         console.log("Body:", req[source]);
         const result = schema.safeParse(req[source]);
         if(!result.success){
-             return res.status(400).json({
-               success: false,
-               errors: result.error.issues,
-             });
+            const errors = {};
+
+            result.error.issues.forEach((issue) => {
+              errors[issue.path[0]] = issue.message;
+            });
+
+            return res.status(400).json({
+              success: false,
+              errors,
+            });
         }
         req[source] = result.data;
 
