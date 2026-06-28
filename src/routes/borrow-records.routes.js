@@ -59,6 +59,11 @@ const createRecord = async (req, res) => {
     });
     res.status(201).json(record);
   } catch (error) {
+    if (error.code === "P2003") {
+      return res.status(400).json({
+        message: "Invalid reference. Related record does not exist.",
+      });
+    }
     res.status(500).json({
       message: error.message,
     });
