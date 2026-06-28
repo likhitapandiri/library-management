@@ -1,21 +1,53 @@
+import express from "express";
+import prisma from "../prismaClient.js";
+
+const router = express.Router();
+
 const include = async (req, res) => {
+  try{
   const records = await prisma.borrowRecord.findMany({
     include: {
       student: true,
       book: true,
     },
   });
+
+    if (!records) {
+      return res.status(404).json({
+        message: "records not found",
+      });
+    }
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
+
 const select = async (req, res) => {
+  try{
   const books = await prisma.book.findMany({
     select: {
       id: true,
       title: true,
     },
   });
+      if (!records) {
+      return res.status(404).json({
+        message: "records not found",
+      });
+    }
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
 const includeAndSelect = async (req, res) => {
+  try{
   const records = await prisma.borrowRecord.findMany({
     select: {
       id: true,
@@ -33,10 +65,22 @@ const includeAndSelect = async (req, res) => {
       },
     },
   });
+
+     if (!records) {
+      return res.status(404).json({
+        message: "records not found",
+      });
+    }
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+}
 };
 
-
 const advanced = async ( req,res) => {
+  try{
   //comparisons WHERE quantity > 5
 
   const records1 = await prisma.book.findMany({
@@ -59,7 +103,7 @@ const advanced = async ( req,res) => {
   });
 
   //startsWith WHERE title LIKE 'Clean%'
-    const records3 = await prisma.book.findMany({
+  const records3 = await prisma.book.findMany({
 
   where: {
     title: {
@@ -94,7 +138,7 @@ const records5 = await prisma.book.findMany({
   //ORDERBY  -- ORDER BY title ASC
 const records6 = await prisma.book.findMany({
   orderBy: {
-    title: "asc",
+    quantity: "asc",
   },
 });
 
@@ -115,5 +159,38 @@ const records9 = await prisma.book.findMany({
   take: 5,
   skip: 0,
 });
+
+const records =  {
+  records1,
+  records2,
+  records3,
+  records4,
+  records5,
+  records6,
+  records7,
+  records8,
+  records9,
+}
+    if (!records) {
+      return res.status(404).json({
+        message: "records not found",
+      });
+    }
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
+
+router.get("/include", include);
+
+router.get("/select", select);
+
+router.get("/include-select", includeAndSelect);
+
+router.get("/queries", advanced);
+
+export default router; 

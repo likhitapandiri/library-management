@@ -5,7 +5,7 @@ import booksRoutes from "./src/routes/books.routes.js";
 import studentsRoutes from "./src/routes/students.routes.js";
 import borrowRecordsRoutes from "./src/routes/borrow-records.routes.js";
 import prisma from "./src/prismaClient.js";
-
+import advancedQueriesRoutes from "./src/routes/advance-queries.routes.js"
 const app = express();
 await prisma.$connect();
 const PORT = 3000;
@@ -22,6 +22,8 @@ app.use("/books",booksRoutes);
 app.use("/students",studentsRoutes);
 
 app.use("/records",borrowRecordsRoutes);
+
+app.use("/advanced",advancedQueriesRoutes);
 
 // Start server
 app.listen(PORT, () => {
