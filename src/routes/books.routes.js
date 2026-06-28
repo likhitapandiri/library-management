@@ -1,6 +1,12 @@
 import express from "express";
 import prisma from "../prismaClient.js";
+import validateRequest from "../../middleware/validator.js"
 
+import {
+  CreateBookSchema,
+  UpdateBookSchema,
+  BookIdSchema,
+} from "../validators/book.validator.js";
 const router = express.Router();
 const getBooks = async (req, res) => {
   try {
@@ -89,12 +95,17 @@ const deleteBook = async(req,res) =>{
 
 router.get("/",getBooks);
 
-router.post("/",createBook);
+router.post("/", validateRequest(CreateBookSchema), createBook);
 
-router.get("/:id", getBookById);
+router.get("/:id", validateRequest(BookIdSchema, "params"), getBookById);
 
-router.post("/:id", updateBook);
+router.post(
+  "/:id",
+  validateRequest(BookIdSchema, "params"),
+  validateRequest(UpdateBookSchema),
+  updateBook,
+);
 
-router.delete("/:id",deleteBook);
+router.delete("/:id", validateRequest(BookIdSchema, "params"), deleteBook);
 
 export default router 
